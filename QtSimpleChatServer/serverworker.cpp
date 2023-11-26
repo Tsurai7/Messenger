@@ -34,7 +34,7 @@ void ServerWorker::sendJson(const QJsonObject &json)
     emit logMessage(QLatin1String("Sending to ") + userName() + QLatin1String(" - ") + QString::fromUtf8(jsonData));
     // we send the message to the socket in the exact same way we did in the client
     QDataStream socketStream(m_serverSocket);
-    socketStream.setVersion(QDataStream::Qt_5_7);
+    socketStream.setVersion(QDataStream::Qt_6_6);
     socketStream << jsonData;
 }
 
@@ -60,7 +60,7 @@ void ServerWorker::receiveJson()
     // create a QDataStream operating on the socket
     QDataStream socketStream(m_serverSocket);
     // set the version so that programs compiled with different versions of Qt can agree on how to serialise
-    socketStream.setVersion(QDataStream::Qt_5_7);
+    socketStream.setVersion(QDataStream::Qt_6_6);
     // start an infinite loop
     for (;;) {
         // we start a transaction so we can revert to the previous state in case we try to read more data than is available on the socket

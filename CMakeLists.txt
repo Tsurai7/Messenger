@@ -3,5 +3,4 @@ project(QtSimpleChat LANGUAGES CXX)
 
 add_subdirectory(QtSimpleChatClient)
 add_subdirectory(QtSimpleChatServer)
-add_subdirectory(QtSimpleChatServerThreaded)
 

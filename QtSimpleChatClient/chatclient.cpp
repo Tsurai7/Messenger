@@ -32,7 +32,7 @@ void ChatClient::login(const QString &userName)
         // create a QDataStream operating on the socket
         QDataStream clientStream(m_clientSocket);
         // set the version so that programs compiled with different versions of Qt can agree on how to serialise
-        clientStream.setVersion(QDataStream::Qt_5_7);
+        clientStream.setVersion(QDataStream::Qt_6_6);
         // Create the JSON we want to send
         QJsonObject message;
         message[QStringLiteral("type")] = QStringLiteral("login");
@@ -49,7 +49,7 @@ void ChatClient::sendMessage(const QString &text)
     // create a QDataStream operating on the socket
     QDataStream clientStream(m_clientSocket);
     // set the version so that programs compiled with different versions of Qt can agree on how to serialise
-    clientStream.setVersion(QDataStream::Qt_5_7);
+    clientStream.setVersion(QDataStream::Qt_6_6);
     // Create the JSON we want to send
     QJsonObject message;
     message[QStringLiteral("type")] = QStringLiteral("message");
@@ -126,7 +126,7 @@ void ChatClient::onReadyRead()
     // create a QDataStream operating on the socket
     QDataStream socketStream(m_clientSocket);
     // set the version so that programs compiled with different versions of Qt can agree on how to serialise
-    socketStream.setVersion(QDataStream::Qt_5_7);
+    socketStream.setVersion(QDataStream::Qt_6_6);
     // start an infinite loop
     for (;;) {
         // we start a transaction so we can revert to the previous state in case we try to read more data than is available on the socket
