@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include <QAbstractSocket>
+
+
 class ChatClient;
 class QStandardItemModel;
 namespace Ui { class ChatWindow; }
@@ -18,7 +20,7 @@ private:
     ChatClient *m_chatClient;
     QStandardItemModel *m_chatModel;
     QString m_lastUserName;
-private slots:
+
     void attemptConnection();
     void connectedToServer();
     void attemptLogin(const QString &userName);

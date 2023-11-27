@@ -17,7 +17,9 @@ ChatWindow::ChatWindow(QWidget *parent)
     m_chatModel->insertColumn(0);
     // set the model as the data source vor the list view
     ui->chatView->setModel(m_chatModel);
-    // connect the signals from the chat client to the slots in this ui
+
+
+
     connect(m_chatClient, &ChatClient::connected, this, &ChatWindow::connectedToServer);
     connect(m_chatClient, &ChatClient::loggedIn, this, &ChatWindow::loggedIn);
     connect(m_chatClient, &ChatClient::loginError, this, &ChatWindow::loginFailed);

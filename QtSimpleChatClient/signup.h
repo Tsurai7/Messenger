@@ -2,6 +2,9 @@
 #define SIGNUP_H
 
 #include <QDialog>
+#include "user.h"
+#include "dbmanager.h"
+
 
 namespace Ui {
 class SignUp;
@@ -14,12 +17,14 @@ class SignUp : public QDialog
 public:
     explicit SignUp(QWidget *parent = nullptr);
     ~SignUp();
-
+signals:
+    void userRegistered(const User &user);
 private slots:
     void on_pushButton_SignUp_clicked();
 
 private:
     Ui::SignUp *ui;
+    DbManager *dbManager;
 };
 
 #endif // SIGNUP_H
