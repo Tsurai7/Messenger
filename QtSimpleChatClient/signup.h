@@ -5,7 +5,6 @@
 #include "user.h"
 #include "dbmanager.h"
 
-
 namespace Ui {
 class SignUp;
 }
@@ -22,8 +21,11 @@ signals:
 private slots:
     void on_pushButton_SignUp_clicked();
 
+    void on_pushButton_SignIn_clicked();
+
 private:
     Ui::SignUp *ui;
+    User appUser;
     DbManager *dbManager;
 };
 

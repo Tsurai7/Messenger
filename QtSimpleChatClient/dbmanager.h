@@ -14,7 +14,8 @@ public:
     bool createTable();
     void close();
 
-    bool addUser(const QString& name, const QString& password);
+    bool addUser(User user);
+    bool getByEmail(const QString& email, User &user);
     bool getByName(const QString& name, User &user);
 
 private:

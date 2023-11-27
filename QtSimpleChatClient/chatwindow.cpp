@@ -5,13 +5,15 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QHostAddress>
+
+
 ChatWindow::ChatWindow(QWidget *parent)
     : QWidget(parent)
-    , ui(new Ui::ChatWindow) // create the elements defined in the .ui file
-    , m_chatClient(new ChatClient(this)) // create the chat client
-    , m_chatModel(new QStandardItemModel(this)) // create the model to hold the messages
+    , ui(new Ui::ChatWindow)
+    , m_chatClient(new ChatClient(this))
+    , m_chatModel(new QStandardItemModel(this))
 {
-    // set up of the .ui file
+
     ui->setupUi(this);
     // the model for the messages will have 1 column
     m_chatModel->insertColumn(0);
@@ -28,11 +30,15 @@ ChatWindow::ChatWindow(QWidget *parent)
     connect(m_chatClient, &ChatClient::error, this, &ChatWindow::error);
     connect(m_chatClient, &ChatClient::userJoined, this, &ChatWindow::userJoined);
     connect(m_chatClient, &ChatClient::userLeft, this, &ChatWindow::userLeft);
+
     // connect the connect button to a slot that will attempt the connection
     connect(ui->connectButton, &QPushButton::clicked, this, &ChatWindow::attemptConnection);
+
     // connect the click of the "send" button and the press of the enter while typing to the slot that sends the message
     connect(ui->sendButton, &QPushButton::clicked, this, &ChatWindow::sendMessage);
     connect(ui->messageEdit, &QLineEdit::returnPressed, this, &ChatWindow::sendMessage);
+
+    setFixedSize(480, 480);
 }
 
 ChatWindow::~ChatWindow()

@@ -6,12 +6,87 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>600</height>
+    <width>480</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/* Reset some default styling */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* Body styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: #1e1e1e;
+}
+
+/* Container styles */
+.container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Label styles */
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #7d7d7d;
+}
+
+/* Input styles */
+input[type=&quot;text&quot;],
+input[type=&quot;password&quot;] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #d3d3d3;
+    border-radius: 4px;
+    color: #1e1e1e;
+    transition: border-color 0.3s ease;
+}
+
+input[type=&quot;text&quot;]:focus,
+input[type=&quot;password&quot;]:focus {
+    border-color: #4a90e2;
+}
+
+/* Button styles */
+button {
+    display: inline-block;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    background-color: #4a90e2;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #3465a4;
+}
+
+/* Additional styles */
+.login-button {
+    width: 100%;
+}
+</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>
@@ -19,8 +94,8 @@
   <widget class="QPushButton" name="pushButton_SignUp">
    <property name="geometry">
     <rect>
-     <x>260</x>
-     <y>410</y>
+     <x>190</x>
+     <y>360</y>
      <width>91</width>
      <height>31</height>
     </rect>
@@ -32,8 +107,8 @@
   <widget class="QLabel" name="label_Title">
    <property name="geometry">
     <rect>
-     <x>200</x>
-     <y>50</y>
+     <x>130</x>
+     <y>20</y>
      <width>241</width>
      <height>61</height>
     </rect>
@@ -50,8 +125,8 @@
   <widget class="QPushButton" name="pushButton_SignIn">
    <property name="geometry">
     <rect>
-     <x>260</x>
-     <y>510</y>
+     <x>190</x>
+     <y>440</y>
      <width>80</width>
      <height>24</height>
     </rect>
@@ -63,8 +138,8 @@
   <widget class="QLabel" name="label_HaveAccount">
    <property name="geometry">
     <rect>
-     <x>190</x>
-     <y>470</y>
+     <x>120</x>
+     <y>400</y>
      <width>241</width>
      <height>31</height>
     </rect>
@@ -81,8 +156,8 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>130</y>
+     <x>50</x>
+     <y>80</y>
      <width>381</width>
      <height>271</height>
     </rect>
@@ -105,7 +180,13 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_Name"/>
+       <widget class="QLineEdit" name="lineEdit_Name">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -126,7 +207,13 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_Email"/>
+       <widget class="QLineEdit" name="lineEdit_Email">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -147,7 +234,13 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_Password"/>
+       <widget class="QLineEdit" name="lineEdit_Password">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -167,6 +260,11 @@
       </item>
       <item>
        <widget class="QLineEdit" name="lineEdit_Confirm">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string/>
         </property>

@@ -23,6 +23,7 @@ bool DbManager::createTable()
     QSqlQuery createTableQuery;
     createTableQuery.prepare("CREATE TABLE IF NOT EXISTS users "
                              "(id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                             "email TEXT, "
                              "username TEXT, "
                              "password TEXT, "
                              "createdAt DATETIME, "
@@ -41,7 +42,7 @@ void DbManager::close()
     database.close();
 }
 
-bool DbManager::addUser(const QString &username, const QString &password)
+bool DbManager::addUser(User user)
 {
     if (!database.isOpen()) {
         qDebug() << "Error: Database is not open.";
@@ -51,10 +52,11 @@ bool DbManager::addUser(const QString &username, const QString &password)
     QDateTime currentDateTime = QDateTime::currentDateTime();
 
     QSqlQuery query;
-    query.prepare("INSERT INTO users (username, password, createdAt, updatedAt) "
-                  "VALUES (:username, :password, :createdAt, :updatedAt)");
-    query.bindValue(":username", username);
-    query.bindValue(":password", password);
+    query.prepare("INSERT INTO users (username, email, password, createdAt, updatedAt) "
+                  "VALUES (:username, :email, :password, :createdAt, :updatedAt)");
+    query.bindValue(":username", user.getName());
+    query.bindValue(":email", user.getEmail());
+    query.bindValue(":password", user.getPassword());
     query.bindValue(":createdAt", currentDateTime);
     query.bindValue(":updatedAt", currentDateTime);
 
@@ -64,6 +66,35 @@ bool DbManager::addUser(const QString &username, const QString &password)
     }
 
     return true;
+}
+
+bool DbManager::getByEmail(const QString &email, User &user)
+{
+    if (!database.isOpen()) {
+        database.open();
+    }
+
+    QSqlQuery query;
+
+    query.prepare("SELECT * FROM users WHERE email = :email");
+    query.bindValue(":email", email);
+
+    if (!query.exec()) {
+        qDebug() << "Error: Unable to retrieve user by email." << query.lastError();
+        return false;
+    }
+
+    if (query.next()) {
+        user.setId(query.value("id").toInt());
+        user.setName(query.value("username").toString());
+        user.setEmail(query.value("email").toString()); // Добавлено получение email
+        user.setPassword(query.value("password").toString());
+        user.setCreatedAt(query.value("createdAt").toDateTime());
+        user.setUpdatedAt(query.value("updatedAt").toDateTime());
+        return true;
+    }
+
+    return false;
 }
 
 
