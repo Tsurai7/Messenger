@@ -1,4 +1,3 @@
-// messagesdb.cpp
 #include "messagesdb.h"
 #include "QDateTime"
 

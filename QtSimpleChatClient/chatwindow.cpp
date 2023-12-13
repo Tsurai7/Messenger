@@ -149,19 +149,15 @@ void ChatWindow::disconnectedFromServer()
 
 void ChatWindow::userJoined(const QString &username)
 {
-    // store the index of the new row to append to the model containing the messages
     const int newRow = m_chatModel->rowCount();
-    // insert a row
+
     m_chatModel->insertRow(newRow);
-    // store in the model the message to comunicate a user joined
     m_chatModel->setData(m_chatModel->index(newRow, 0), tr("%1 Joined the Chat").arg(username));
-    // set the alignment for the text
+
     m_chatModel->setData(m_chatModel->index(newRow, 0), Qt::AlignCenter, Qt::TextAlignmentRole);
-    // set the color for the text
+
     m_chatModel->setData(m_chatModel->index(newRow, 0), QBrush(Qt::blue), Qt::ForegroundRole);
-    // scroll the view to display the new message
     ui->chatView->scrollToBottom();
-    // reset the last printed username
     m_lastUserName.clear();
 }
 void ChatWindow::userLeft(const QString &username)
@@ -182,7 +178,7 @@ void ChatWindow::error(QAbstractSocket::SocketError socketError)
     switch (socketError) {
     case QAbstractSocket::RemoteHostClosedError:
     case QAbstractSocket::ProxyConnectionClosedError:
-        return; // handled by disconnectedFromServer
+        return;
     case QAbstractSocket::ConnectionRefusedError:
         QMessageBox::critical(this, tr("Error"), tr("The host refused the connection"));
         break;

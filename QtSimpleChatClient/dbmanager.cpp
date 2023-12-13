@@ -87,7 +87,7 @@ bool DbManager::getByEmail(const QString &email, User &user)
     if (query.next()) {
         user.setId(query.value("id").toInt());
         user.setName(query.value("username").toString());
-        user.setEmail(query.value("email").toString()); // Добавлено получение email
+        user.setEmail(query.value("email").toString());
         user.setPassword(query.value("password").toString());
         user.setCreatedAt(query.value("createdAt").toDateTime());
         user.setUpdatedAt(query.value("updatedAt").toDateTime());
