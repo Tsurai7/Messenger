@@ -1,9 +1,7 @@
 #include "signin.h"
 #include "ui_signin.h"
-
 #include "signup.h"
 #include "chatwindow.h"
-
 #include <QMessageBox>
 #include <QLineEdit>
 #include "QRegularExpression"
@@ -13,11 +11,8 @@ SignIn::SignIn(QWidget *parent) :
     ui(new Ui::SignIn)
 {
     ui->setupUi(this);
-
     setFixedSize(400, 440);
-
     ui->lineEdit_Password->setEchoMode(QLineEdit::Password);
-
     dbManager = new DbManager();
 }
 
@@ -30,9 +25,7 @@ SignIn::~SignIn()
 void SignIn::on_pushButton_Back_clicked()
 {
     SignUp *signUpWindow = new SignUp(this);
-
     this->close();
-
     signUpWindow->show();
 }
 
@@ -42,13 +35,12 @@ void SignIn::on_pushButton_SignIn_clicked()
     QString email = ui->lineEdit_Email->text();
     QString password = ui->lineEdit_Password->text();
 
-
+    // model validation
     if (email.isEmpty() || password.isEmpty())
     {
         QMessageBox::warning(this, "Error", "Fill all fields");
         return;
     }
-
 
     QRegularExpression emailRegex(R"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)");
 
@@ -58,13 +50,11 @@ void SignIn::on_pushButton_SignIn_clicked()
         return;
     }
 
-
     if (password.length() < 6)
     {
         QMessageBox::warning(this, "Error", "Password should be longer than 6");
         return;
     }
-
 
     User testUser;
     if(!dbManager->getByEmail(email, testUser))
@@ -79,9 +69,7 @@ void SignIn::on_pushButton_SignIn_clicked()
         if(email == user.getEmail() && password == user.getPassword())
         {
             ChatWindow* chatWindow = new ChatWindow();
-
             this->close();
-
             chatWindow->show();
         }
         else

@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QTcpSocket>
-class QJsonObject;
+
 class ServerWorker : public QObject
 {
     Q_OBJECT

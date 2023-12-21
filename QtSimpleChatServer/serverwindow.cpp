@@ -2,6 +2,7 @@
 #include "ui_serverwindow.h"
 #include "chatserver.h"
 #include <QMessageBox>
+
 ServerWindow::ServerWindow(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::ServerWindow)
@@ -23,8 +24,9 @@ void ServerWindow::toggleStartServer()
         m_chatServer->stopServer();
         ui->startStopButton->setText(tr("Start Server"));
         logMessage(QStringLiteral("Server Stopped"));
-    } else {
-        if (!m_chatServer->listen(QHostAddress::Any, 1967)) {
+    }
+    else {
+        if (!m_chatServer->listen(QHostAddress::Any, 8080)) {
             QMessageBox::critical(this, tr("Error"), tr("Unable to start the server"));
             return;
         }

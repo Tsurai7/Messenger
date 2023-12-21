@@ -17,7 +17,7 @@ SignUp::SignUp(QWidget *parent) :
 
     ui->lineEdit_Password->setEchoMode(QLineEdit::Password);
     ui->lineEdit_Confirm->setEchoMode(QLineEdit::Password);
-     dbManager = new DbManager();
+    dbManager = new DbManager();
     //dbManager->createTable();
 
 }
@@ -38,7 +38,7 @@ void SignUp::on_pushButton_SignUp_clicked()
 
     if (username.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty())
     {
-        QMessageBox::warning(this, "Ошибка", "Пожалуйста, заполните все поля.");
+        QMessageBox::warning(this, "Error", "Please, fill all fields");
         return;
     }
 
@@ -78,22 +78,17 @@ void SignUp::on_pushButton_SignUp_clicked()
     {
         if (dbManager->getByName(username, user))
         {
-            //emit userRegistered(user);
             qDebug() << "Emitting userRegistered signal with user:" << user.getName();
-            //this->accept();
             ChatWindow* chatWindow = new ChatWindow();
-
             this->close();
-
             chatWindow->show();
 
         }
         else
         {
-            QMessageBox::critical(this, "Ошибка", "Не удалось получить информацию о пользователе.");
+            QMessageBox::critical(this, "Error", "Cant find the user.");
         }
     }
-
 }
 
 

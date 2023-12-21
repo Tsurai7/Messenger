@@ -20,7 +20,6 @@ signals:
     void userRegistered(const User &user);
 private slots:
     void on_pushButton_SignUp_clicked();
-
     void on_pushButton_SignIn_clicked();
 
 private:

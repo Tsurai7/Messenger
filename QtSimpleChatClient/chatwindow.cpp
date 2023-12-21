@@ -13,12 +13,9 @@ ChatWindow::ChatWindow(QWidget *parent)
     , m_chatClient(new ChatClient(this))
     , m_chatModel(new QStandardItemModel(this))
 {
-
     ui->setupUi(this);
     m_chatModel->insertColumn(0);
     ui->chatView->setModel(m_chatModel);
-
-
 
     connect(m_chatClient, &ChatClient::connected, this, &ChatWindow::connectedToServer);
     connect(m_chatClient, &ChatClient::loggedIn, this, &ChatWindow::loggedIn);
@@ -30,7 +27,6 @@ ChatWindow::ChatWindow(QWidget *parent)
     connect(m_chatClient, &ChatClient::userLeft, this, &ChatWindow::userLeft);
 
     connect(ui->connectButton, &QPushButton::clicked, this, &ChatWindow::attemptConnection);
-
     connect(ui->sendButton, &QPushButton::clicked, this, &ChatWindow::sendMessage);
     connect(ui->messageEdit, &QLineEdit::returnPressed, this, &ChatWindow::sendMessage);
 
@@ -44,7 +40,6 @@ ChatWindow::~ChatWindow()
 
 void ChatWindow::attemptConnection()
 {
-
     const QString hostAddress = QInputDialog::getText(
         this
         , tr("Choose Server")
@@ -56,7 +51,7 @@ void ChatWindow::attemptConnection()
         return;
 
     ui->connectButton->setEnabled(false);
-    m_chatClient->connectToServer(QHostAddress(hostAddress), 1967);
+    m_chatClient->connectToServer(QHostAddress(hostAddress), 8080);
 }
 
 void ChatWindow::connectedToServer()
@@ -101,11 +96,8 @@ void ChatWindow::messageReceived(const QString &sender, const QString &text)
         boldFont.setBold(true);
 
         m_chatModel->insertRows(newRow, 2);
-
         m_chatModel->setData(m_chatModel->index(newRow, 0), sender + QLatin1Char(':'));
-
         m_chatModel->setData(m_chatModel->index(newRow, 0), int(Qt::AlignLeft | Qt::AlignVCenter), Qt::TextAlignmentRole);
-
         m_chatModel->setData(m_chatModel->index(newRow, 0), boldFont, Qt::FontRole);
         ++newRow;
     } else {
@@ -164,6 +156,8 @@ void ChatWindow::userJoined(const QString &username)
     // reset the last printed username
     m_lastUserName.clear();
 }
+
+
 void ChatWindow::userLeft(const QString &username)
 {
     const int newRow = m_chatModel->rowCount();
@@ -176,53 +170,24 @@ void ChatWindow::userLeft(const QString &username)
     m_lastUserName.clear();
 }
 
+// error handling
 void ChatWindow::error(QAbstractSocket::SocketError socketError)
 {
-
     switch (socketError) {
-    case QAbstractSocket::RemoteHostClosedError:
     case QAbstractSocket::ProxyConnectionClosedError:
         return; // handled by disconnectedFromServer
     case QAbstractSocket::ConnectionRefusedError:
         QMessageBox::critical(this, tr("Error"), tr("The host refused the connection"));
         break;
-    case QAbstractSocket::ProxyConnectionRefusedError:
-        QMessageBox::critical(this, tr("Error"), tr("The proxy refused the connection"));
-        break;
-    case QAbstractSocket::ProxyNotFoundError:
-        QMessageBox::critical(this, tr("Error"), tr("Could not find the proxy"));
-        break;
     case QAbstractSocket::HostNotFoundError:
         QMessageBox::critical(this, tr("Error"), tr("Could not find the server"));
-        break;
-    case QAbstractSocket::SocketAccessError:
-        QMessageBox::critical(this, tr("Error"), tr("You don't have permissions to execute this operation"));
-        break;
-    case QAbstractSocket::SocketResourceError:
-        QMessageBox::critical(this, tr("Error"), tr("Too many connections opened"));
         break;
     case QAbstractSocket::SocketTimeoutError:
         QMessageBox::warning(this, tr("Error"), tr("Operation timed out"));
         return;
-    case QAbstractSocket::ProxyConnectionTimeoutError:
-        QMessageBox::critical(this, tr("Error"), tr("Proxy timed out"));
-        break;
-    case QAbstractSocket::NetworkError:
-        QMessageBox::critical(this, tr("Error"), tr("Unable to reach the network"));
-        break;
     case QAbstractSocket::UnknownSocketError:
         QMessageBox::critical(this, tr("Error"), tr("An unknown error occured"));
         break;
-    case QAbstractSocket::UnsupportedSocketOperationError:
-        QMessageBox::critical(this, tr("Error"), tr("Operation not supported"));
-        break;
-    case QAbstractSocket::ProxyAuthenticationRequiredError:
-        QMessageBox::critical(this, tr("Error"), tr("Your proxy requires authentication"));
-        break;
-    case QAbstractSocket::ProxyProtocolError:
-        QMessageBox::critical(this, tr("Error"), tr("Proxy comunication failed"));
-        break;
-    case QAbstractSocket::TemporaryError:
     case QAbstractSocket::OperationError:
         QMessageBox::warning(this, tr("Error"), tr("Operation failed, please try again"));
         return;

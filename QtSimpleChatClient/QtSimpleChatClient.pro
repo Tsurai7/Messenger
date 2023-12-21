@@ -14,7 +14,6 @@ SOURCES += \
     chatwindow.cpp \
     chatclient.cpp \
     dbmanager.cpp \
-    messagesdb.cpp \
     signin.cpp \
     signup.cpp \
     user.cpp
@@ -29,7 +28,6 @@ HEADERS += \
     chatwindow.h \
     chatclient.h \
     dbmanager.h \
-    messagesdb.h \
     signin.h \
     signup.h \
     user.h

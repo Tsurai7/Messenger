@@ -12,7 +12,6 @@ public:
     QString getPassword() const;
     QString getEmail() const;
 
-
     void setName(const QString& name);
     void setPassword(const QString& password);
     void setEmail(const QString& email);

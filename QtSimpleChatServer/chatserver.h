@@ -3,8 +3,8 @@
 
 #include <QTcpServer>
 #include <QVector>
-class QThread;
-class ServerWorker;
+#include "serverworker.h"
+
 class ChatServer : public QTcpServer
 {
     Q_OBJECT

@@ -8,16 +8,10 @@ ServerWorker::ServerWorker(QObject *parent)
     : QObject(parent)
     , m_serverSocket(new QTcpSocket(this))
 {
-
     connect(m_serverSocket, &QTcpSocket::readyRead, this, &ServerWorker::receiveJson);
     connect(m_serverSocket, &QTcpSocket::disconnected, this, &ServerWorker::disconnectedFromClient);
-#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
-    connect(m_serverSocket, QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::error), this, &ServerWorker::error);
-#else
     connect(m_serverSocket, &QAbstractSocket::errorOccurred, this, &ServerWorker::error);
-#endif
 }
-
 
 bool ServerWorker::setSocketDescriptor(qintptr socketDescriptor)
 {
@@ -56,7 +50,7 @@ void ServerWorker::receiveJson()
     QDataStream socketStream(m_serverSocket);
     socketStream.setVersion(QDataStream::Qt_6_6);
 
-    for (;;) {
+    while (true) {
         socketStream.startTransaction();
         socketStream >> jsonData;
         if (socketStream.commitTransaction()) {
